@@ -1,2 +1,10 @@
-# Fall-Detection-in-IoT-Smart-Home-Applications
-In smart home applications, effective fall detection  is a critical concern to minimize the occurrence of falls leading to  injuries, especially for the assistance of elderly individuals.
+# Fall_Detection_Using_Yolov8
+Fall_Detection_Using_Yolov8
+
+
+
+# Watch the video
+
+
+[![Watch the video](https://github.com/noorkhokhar99/Fall_Detection_Using_Yolov8/blob/main/Add%20a%20heading.png)](https://www.youtube.com/watch?v=9DpI4NVuiTg)
+
