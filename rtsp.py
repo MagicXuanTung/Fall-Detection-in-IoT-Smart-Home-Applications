@@ -25,7 +25,7 @@ while cap.isOpened():
 
     if success:
         # Run YOLOv8 tracking on the frame, persisting tracks between frames
-        results = model.track(frame, persist=True, conf=0.8)
+        results = model.track(frame, persist=True, conf=0.5)
 
         # Visualize the results on the frame
         annotated_frame = results[0].plot()

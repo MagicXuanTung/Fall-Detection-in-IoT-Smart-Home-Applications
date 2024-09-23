@@ -12,5 +12,5 @@ async def send_message(token, chat_id, message):
     await bot.send_message(chat_id=chat_id, text=message)
 
 if __name__ == "__main__":
-    message = "xin chào có người bị ngã ở đây"
+    message = "có người bị ngã ở đây nhé đến đây"
     asyncio.run(send_message(TOKEN, CHAT_ID, message))
