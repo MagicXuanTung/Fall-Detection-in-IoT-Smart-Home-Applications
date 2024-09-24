@@ -7,6 +7,9 @@ import cv2
 import os
 from datetime import datetime
 
+
+rtsp_url = "rtsp://admin:123456789tung@192.168.0.110:554/ch1/main"
+
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
 
@@ -24,7 +27,7 @@ class VideoApp(QMainWindow):
         self.info_label.setStyleSheet("font-size: 16px;")
 
         # MARK: Capture Video
-        self.cap = cv2.VideoCapture(0)
+        self.cap = cv2.VideoCapture(rtsp_url)
 
         # MARK: Set up the UI
         self.initUI()
@@ -222,7 +225,7 @@ class VideoApp(QMainWindow):
         success, frame = self.cap.read()
         if success:
             frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-
+            frame = cv2.resize(frame, (640, 480))
             if self.detect_enabled:
                 results = self.model.track(frame, persist=True, conf=0.5)
             else:
