@@ -9,8 +9,8 @@ from datetime import datetime
 import asyncio
 from telegram import Bot
 
-TOKEN = 'YOUR_TOKEN_HERE'
-CHAT_ID = 'YOUR_CHAT_ID_HERE'
+TOKEN = '7533715892:AAEznW0oScW2u5_tYIsYxGpppwdwJ4QS_AU'
+CHAT_ID = '-4570371594'
 
 rtsp_url = "rtsp://admin:123456789tung@192.168.0.110:554/ch1/main"
 model_directory = r"C:\Users\magic\Desktop\Nghiên_cứu_khoa_học\Fall_Detection_Using_Yolov8-main\model"
