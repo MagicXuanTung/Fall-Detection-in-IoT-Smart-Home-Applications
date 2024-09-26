@@ -1,6 +1,6 @@
 from ultralytics import YOLO
 
-model_weights_path = "fall_det_1.pt"
+model_weights_path = r"C:\Users\magic\Desktop\Nghiên_cứu_khoa_học\Fall_Detection_Using_Yolov8-main\model\fall_det_1.pt"
 
 all_objects_model = YOLO(model_weights_path)
 
