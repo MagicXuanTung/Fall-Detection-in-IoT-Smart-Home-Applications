@@ -5,7 +5,8 @@ import os
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
 # Load the YOLO model
-model = YOLO("fall_det_1.pt")
+model = YOLO(
+    r"C:\Users\magic\Desktop\Nghiên_cứu_khoa_học\Fall_Detection_Using_Yolov8-main\model\fall_detection.pt")
 
 # Capture video from the RTSP stream
 rtsp_url = "rtsp://admin:123456789tung@192.168.0.110:554/ch1/main"

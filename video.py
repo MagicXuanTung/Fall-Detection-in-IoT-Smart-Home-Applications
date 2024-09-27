@@ -5,7 +5,8 @@ import os
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
 # model = YOLO("./runs/detect/train/weights/best.pt")
-model = YOLO("fall_det_1.pt")
+model = YOLO(
+    r"C:\Users\magic\Desktop\Nghiên_cứu_khoa_học\Fall_Detection_Using_Yolov8-main\model\fall_detection.pt")
 
 cap = cv2.VideoCapture(0)
 
@@ -16,7 +17,7 @@ while cap.isOpened():
 
     if success:
         # Run YOLOv8 tracking on the frame, persisting tracks between frames
-        results = model.track(frame, persist=True, conf=0.8)
+        results = model.track(frame, persist=True, conf=0.7)
 
         # Visualize the results on the frame
         annotated_frame = results[0].plot()
