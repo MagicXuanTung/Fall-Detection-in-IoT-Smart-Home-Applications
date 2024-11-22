@@ -13,7 +13,7 @@ import cv2
 from telegram import Bot
 
 # Đường dẫn đến mô hình YOLO
-model_path = r"D:\Fall-Detection-in-IoT-Smart-Home-Applications\model\yolov8n.pt"
+model_path = r"D:\Fall-Detection-in-IoT-Smart-Home-Applications\model\fall_detection.pt"
 
 # Giải quyết vấn đề liên quan đến OpenMP runtime nếu xảy ra
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
@@ -61,7 +61,8 @@ class VideoApp(QMainWindow):
     def initUI(self):
         # Cấu hình giao diện người dùng chính
         self.setWindowTitle("Fall Detection 2024")
-        self.setStyleSheet("background-color: #EDEDED; font-family: Arial;")
+        self.setStyleSheet(
+            "background-color: #EDEDED; font-family: Times New Roman;")
 
         layout = QVBoxLayout()
         self.label = QLabel(self)  # Label hiển thị video
