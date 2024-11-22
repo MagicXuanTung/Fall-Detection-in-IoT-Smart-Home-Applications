@@ -1,3 +1,4 @@
+# Import các thư viện cần thiết
 import sys
 import os
 import asyncio
@@ -11,18 +12,26 @@ from ultralytics import YOLO
 import cv2
 from telegram import Bot
 
-model_path = r"C:\Users\magic\Desktop\Nghiên_cứu_khoa_học\Fall_Detection_Using_Yolov8-main\model\fall_detection.pt"
+# Đường dẫn đến mô hình YOLO
+model_path = r"D:\Fall-Detection-in-IoT-Smart-Home-Applications\model\yolov8n.pt"
 
+# Giải quyết vấn đề liên quan đến OpenMP runtime nếu xảy ra
 os.environ['KMP_DUPLICATE_LIB_OK'] = 'True'
 
+# Thông tin cấu hình Bot Telegram
 TOKEN = '7533715892:AAEznW0oScW2u5_tYIsYxGpppwdwJ4QS_AU'
 CHAT_ID = '-4570371594'
+
+# Đường dẫn luồng RTSP
 rtsp_url = "rtsp://admin:123456789tung@192.168.0.110:554/ch1/main"
+
+# Lớp chính của ứng dụng video
 
 
 class VideoApp(QMainWindow):
     def __init__(self):
         super().__init__()
+        # Cấu hình thiết bị, mô hình và các trạng thái ban đầu
         self.device = 'GPU'
         self.model = self.load_model()
         self.bounding_box_visible = True
@@ -30,30 +39,35 @@ class VideoApp(QMainWindow):
         self.detect_enabled = True
         self.auto_message_enabled = False
         self.auto_save_enabled = False
+        self.prev_time = 0
+        self.current_fps = 0
 
-        # Initialize counts
+        # Khởi tạo đếm số lượng
         self.saved_image_count = 0
         self.sent_message_count = 0
 
-        # UI Elements
+        # Các phần tử giao diện người dùng
         self.info_label = QLabel(self)
-        self.cap = cv2.VideoCapture(rtsp_url)
+        self.cap = cv2.VideoCapture(0)  # Mở webcam
+        self.initUI()  # Khởi tạo giao diện người dùng
 
-        self.initUI()
+        # Cấu hình timer để cập nhật frame video
         self.timer = QTimer()
         self.timer.timeout.connect(self.update_frame)
         self.timer.start(30)
 
-        self.toggle_detect()
+        self.toggle_detect()  # Bật chế độ phát hiện ban đầu
 
     def initUI(self):
+        # Cấu hình giao diện người dùng chính
         self.setWindowTitle("Fall Detection 2024")
         self.setStyleSheet("background-color: #EDEDED; font-family: Arial;")
 
         layout = QVBoxLayout()
-        self.label = QLabel(self)
+        self.label = QLabel(self)  # Label hiển thị video
         layout.addWidget(self.label)
 
+        # Các nhãn hiển thị thông tin
         self.path_label = QLabel("Chưa có đường dẫn lưu trữ", self)
         self.path_label.setFixedHeight(35)
         self.path_label.setStyleSheet(self.get_label_style())
@@ -71,6 +85,7 @@ class VideoApp(QMainWindow):
         self.sent_messages_label.setStyleSheet(self.get_label_style())
         layout.addWidget(self.sent_messages_label)
 
+        # ComboBox chọn thiết bị (CPU hoặc GPU)
         self.device_combo = QComboBox(self)
         self.device_combo.addItems(["GPU", "CPU"])
         self.device_combo.setStyleSheet(self.get_combo_style())
@@ -80,6 +95,7 @@ class VideoApp(QMainWindow):
 
         layout.setSpacing(10)
 
+        # Tạo layout cho các nút bấm
         button_layout = QGridLayout()
         button_layout.setSpacing(10)
         self.setup_buttons(button_layout)
@@ -88,9 +104,10 @@ class VideoApp(QMainWindow):
         central_widget = QWidget()
         central_widget.setLayout(layout)
         self.setCentralWidget(central_widget)
-        self.setGeometry(100, 100, 1280, 720)
+        self.setGeometry(100, 100, 800, 600)  # Đặt kích thước cửa sổ
 
     def setup_buttons(self, layout):
+        # Tạo và cấu hình các nút bấm
         self.toggle_button = QPushButton("Tắt Bounding Box", self)
         self.toggle_button.setStyleSheet(
             self.get_button_style(self.bounding_box_visible))
@@ -255,9 +272,16 @@ class VideoApp(QMainWindow):
         if not success:
             print("Không thể đọc khung hình!")
             return
+        current_time = cv2.getTickCount()
+        fps = cv2.getTickFrequency() / (current_time - self.prev_time)
+        self.prev_time = current_time
+        self.current_fps = int(fps)
 
+        # Hiển thị FPS trên khung hình
+        cv2.putText(frame, f"FPS: {self.current_fps}", (10, 30),
+                    cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        frame = cv2.resize(frame, (1280, 720))
+        frame = cv2.resize(frame, (800, 600))
 
         if self.detect_enabled and self.model is not None:
             results = self.model.track(frame, persist=True, conf=0.75)
