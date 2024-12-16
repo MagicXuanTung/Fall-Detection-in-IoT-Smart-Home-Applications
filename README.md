@@ -16,6 +16,14 @@ Dự án này sử dụng YOLO để phát hiện ngã trong video từ camera. 
 
 - Python 3.8 trở lên
 - Thư viện cần thiết sẽ được cài đặt qua `requirements.txt`
+- # NVIDIA-SMI 522.06 Driver Version: 522.06 CUDA Version: 11.8
+
+# PyTorch version: 2.4.1+cu118
+
+# CUDA available: True
+
+# CUDA version: 11.8
+
 
 ## Cài đặt
 
